@@ -1,0 +1,25 @@
+import app from './app';
+import http from 'http';
+
+
+const PORT = process.env.PORT || 1515;
+const server = http.createServer(app);
+var io = require('socket.io')(server);
+
+let userCount = 0;
+
+io.on('connection', function(socket){
+  userCount++;
+  console.log('users#:', userCount);
+  console.log('Client connected');
+  socket.on('disconnect', () => {
+    userCount--;
+    console.log('Client disconnected')
+    console.log('users#:', userCount);
+  });
+});
+
+// App start
+server.listen(PORT, err => {
+  console.log(err || `Server listening on port ${PORT}`);
+});
