@@ -4,28 +4,8 @@ import http from 'http';
 
 const PORT = process.env.PORT || 1515;
 const server = http.createServer(app);
-var io = require('socket.io')(server);
 
-let userCount = 0;
-
-io.on('connection', function(socket){
-  userCount++;
-  io.emit('usercount', userCount);
-  console.log('users#:', userCount);
-  console.log('Client connected');
-
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-
-
-  socket.on('disconnect', () => {
-    userCount--;
-    io.emit('usercount', userCount);
-    console.log('Client disconnected')
-    console.log('users#:', userCount);
-  });
-});
+var io = require('./socket').listen(server);
 
 // App start
 server.listen(PORT, err => {
