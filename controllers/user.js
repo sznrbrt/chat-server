@@ -9,7 +9,6 @@ class Account {
 
   static register(req, res) {
     let userObj = req.body;
-    console.log('BODY:', req.body);
     UserDB.findOne({email: userObj.email}, (err0, dbUser) => {
       console.log(err0, dbUser);
       if(err0 || dbUser) return res.status(400).send({ error: 'Email not available.' });
