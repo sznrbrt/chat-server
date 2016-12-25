@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import indexRoute from './routes/index'
 
 dotenv.load();
 
@@ -28,11 +29,11 @@ app.use(function(req, res, next) {
 
 // General purpose middlewares and configurations
 app.use(logger('dev'));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 // Entry point for data routes (API)
-app.use('/data', (req, res) => {
-  res.send({ "test": "test"});
-});
+app.use('/data', indexRoute);
 
 //  404 Handler
 app.use((req, res) => {
