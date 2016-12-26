@@ -22,7 +22,7 @@ mongoose.connect(MONGOURL, err => {
 const app = express();
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Credentials", 'true');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE');
@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(require('cookie-parser')('voldemort'));
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -43,7 +44,8 @@ app.use(session({
       ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: false }
 }));
 
 // Initialize Passport and restore authentication state, if any, from the session.
