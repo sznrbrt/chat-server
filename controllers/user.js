@@ -9,8 +9,8 @@ class Account {
 
   static register(req, res) {
     let userObj = req.body;
+    console.log('USER', userObj);
     UserDB.findOne({email: userObj.email}, (err0, dbUser) => {
-      console.log(err0, dbUser);
       if(err0 || dbUser) return res.status(400).send({ error: 'Email not available.' });
 
       bcrypt.hash(userObj.password, 12, (err1, hash) => {
@@ -23,7 +23,7 @@ class Account {
         });
 
         user.save((err2) => {
-          res.status(err2 ? 400 : 200).send(err2 || "Successful registration!");
+          res.status(err2 ? 400 : 200).send(err2 || { message: "Successful registration!"});
         })
       })
     })
@@ -58,7 +58,11 @@ class DevHelp {
 class Auth {
   static login(req, res) {
     console.log('You are in!');
+    console.log('\n');
     console.log(req.session);
+    console.log('\n');
+    console.log(req.user);
+    console.log('\n');
     return res.send(req.user);
   }
 
