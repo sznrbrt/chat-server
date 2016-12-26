@@ -7,15 +7,16 @@ import dotenv from 'dotenv';
 import indexRoute from './routes/index';
 import passport from 'passport';
 import session from 'express-session';
-//dotenv.config();
+dotenv.config();
 
 import PassportMiddleware from './middleware/PassportMiddleware'
 
 // Initialize mongoDB connection
 const MONGOURL = process.env.MONGODB_URI || process.env.MONGOLAB_URI || 'mongodb://localhost/chat-app';
+var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+                replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
 mongoose.Promise = global.Promise;
-console.log('MONGOURL', MONGOURL);
-mongoose.connect(MONGOURL, err => {
+mongoose.connect(MONGOURL,  options, (err) => {
   console.log(err || `MongoDB connected to ${MONGOURL}`);
 });
 
