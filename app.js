@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 import indexRoute from './routes/index';
 import passport from 'passport';
 import session from 'express-session';
-dotenv.load();
+// dotenv.load();
 
 import PassportMiddleware from './middleware/PassportMiddleware'
 
