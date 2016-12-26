@@ -11,11 +11,10 @@ import session from 'express-session';
 
 import PassportMiddleware from './middleware/PassportMiddleware'
 
-console.log(process.env.MONGODB_URI);
-
 // Initialize mongoDB connection
 const MONGOURL = process.env.MONGODB_URI || process.env.MONGOLAB_URI || 'mongodb://localhost/chat-app';
 mongoose.Promise = global.Promise;
+console.log('MONGOURL', MONGOURL);
 mongoose.connect(MONGOURL, err => {
   console.log(err || `MongoDB connected to ${MONGOURL}`);
 });
