@@ -42,7 +42,7 @@ const MongoStore = require('connect-mongo')(session);
 app.use(session({
     secret: 'voldemort',
     store: new MongoStore({
-      url: 'mongodb://localhost/socketchat',
+      url: MONGOURL || 'mongodb://localhost/socketchat',
       ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: true,
